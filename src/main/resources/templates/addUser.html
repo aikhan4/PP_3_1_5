@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+
+    <style>
+        .container {
+        }
+        .formContainer {
+            min-width: 500px;
+            margin-top: 10%;
+            margin-left: 35%;
+            display: inline-flex;
+            flex-direction: column;
+        }
+        .head h2 {
+            text-align: center;
+        }
+        .item {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15%;
+        }
+        label {
+            margin-bottom: 10px;
+        }
+        .createButton {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <div class="formContainer">
+        <div class="head">
+            <h2>Новый пользователь</h2>
+        </div>
+        <form th:method="POST" th:action="@{/add}" th:object="${user}">
+            <div>
+                <div class="items">
+                    <div class="item">
+                        <label for="name">Имя</label>
+                        <input type="text" th:field="*{name}" id="name"/>
+                    </div>
+
+                    <div class="item">
+                        <label for="name">Фамилия</label>
+                        <input type="text" th:field="*{surname}" id="surname"/>
+                    </div>
+                </div>
+
+                <div class="createButton">
+                    <input type="submit" value="Создать"/>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
