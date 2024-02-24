@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>change user</title>
+    <title>admin panel</title>
     <style>
         body {
             margin: 0;
@@ -63,7 +63,6 @@
             width: 100%;
             background: #d0d0d0;
             height: 100%;
-            padding-bottom: 150px;
         }
         .buttonWrapper {
             width: 100%;
@@ -126,11 +125,11 @@
         .tableHead {
             height: 100%;
             background: #c4c2c2;
+            padding-left: 10px;
         }
         .table {
             display: flex;
             flex-direction: column;
-            align-items: center;
             border: 1px solid #abaaaa;
         }
         tbody .bodyTr {
@@ -153,10 +152,12 @@
         #editButton {
             background: #2359a4;
             color: #d0d0d0;
+            cursor: pointer;
         }
         #deleteButton {
             background: #a20d0d;
             color: #d0d0d0;
+            cursor: pointer;
         }
         .headButtons p {
             margin-block-start: 0;
@@ -166,76 +167,15 @@
             color: #1e46ec;
             padding: 15px;
             text-decoration: none;
+            cursor: pointer;
         }
-        .headButtons a:last-child {
+        .headButtons a:first-child {
             background: #b7b5b5;
             color: #343333;
         }
         .headButtons {
             display: flex;
 
-        }
-        .tableBody .item {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 50px;
-            align-items: center;
-        }
-        .tableBody .item input {
-            width: 100%;
-        }
-        .tableBody .item select {
-            width: 100%;
-        }
-        .tableBody {
-            width: 500px;
-        }
-        .item label {
-            margin-bottom: 20px;
-        }
-        .createButton input {
-            padding: 13px;
-            border:  0;
-            background: #2d61a6;
-            border-radius: 5%;
-        }
-        .closeButton input {
-            padding: 13px;
-            border:  0;
-            background: #7c7c7c;
-            border-radius: 5%;
-            margin-right: 20px;
-
-        }
-        .tableHead {
-            width: 100%;
-        }
-        .tableHead .headText {
-            margin-left: 10px;
-        }
-        .tableBody form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .tableBody .items {
-            width: 100%;
-            margin-top: 50px;
-        }
-        .tableBody .createButton {
-            margin-bottom: 50px;
-        }
-        .tableBody .item label {
-            font-weight: bold;
-        }
-        .bottomButtons {
-            display: flex;
-        }
-        .bottomButtons input {
-            cursor: pointer;
-        }
-        .tableHead .headText {
-            text-align: center;
         }
     </style>
 </head>
@@ -244,12 +184,12 @@
     <div class="headerInner">
         <div class="userInfo">
             <div class="item">
-                <p th:text="${cookieUser.getEmail()}"></p>
+                <p th:text="${user.getEmail()}"></p>
             </div>
             <div class="item">
                 <p> with roles: </p>
             </div>
-            <div th:each="role : ${cookieUser.getRoles()}" class="item">
+            <div th:each="role : ${user.getRoles()}" class="item">
                 <p th:text="${role.getRolename().substring(5)}"></p>
             </div>
         </div>
@@ -274,68 +214,66 @@
                     <div class="infoName">
                         <p>Admin panel</p>
                     </div>
+                    <div class="headButtons">
+                        <a href="/admin" >
+                            <p>
+                                Users Table
+                            </p>
+                        </a>
+                        <a href="/add">
+                            <p>
+                                New User
+                            </p>
+                        </a>
+                    </div>
                 </div>
                 <div class="table">
                     <div class="tableHead">
                         <div class="headText">
-                            <p>Edit user</p>
+                            <p>All users</p>
                         </div>
                     </div>
                     <div class="tableBody">
-                        <form th:method="patch" th:action="@{/change}" th:object="${user}">
-                            <div class="items">
-                                <div class="item">
-                                    <label for="id">ID</label>
-                                    <input type="text" th:field="*{id}" id="id" readonly/>
+                        <table>
+                            <tr class="headTr">
+                                <th><p>ID</p></th>
+                                <th><p>First Name</p></th>
+                                <th><p>Last Name</p></th>
+                                <th><p>Age</p></th>
+                                <th><p>Email</p></th>
+                                <th><p>Role</p></th>
+                                <th><p>Edit</p></th>
+                                <th><p>Delete</p></th>
+                            </tr>
+                            <tbody>
+                            <tr class="bodyTr" th:each="user : ${usersList}">
+                                <td><p th:text="${user.getId()}"></p></td>
+                                <td><p th:text="${user.getFirstName()}"></p></td>
+                                <td><p th:text="${user.getLastName()}"></p></td>
+                                <td><p th:text="${user.getAge()}"></p></td>
+                                <td><p th:text="${user.getEmail()}"></p></td>
+                                <td>
+                                <div class="rolesWrapper">
+                                    <div th:each="role : ${user.getRoles()}" class="roleWrapper">
+                                        <p th:text="${role.getRolename().substring(5)}"></p>
+                                    </div>
                                 </div>
-
-                                <div class="item">
-                                    <label for="firstName">First Name</label>
-                                    <input type="text" th:field="*{firstName}" id="firstName"/>
-                                </div>
-
-                                <div class="item">
-                                    <label for="lastName">Last Name</label>
-                                    <input type="text" th:field="*{lastName}" id="lastName"/>
-                                </div>
-
-                                <div class="item">
-                                    <label for="age">Age</label>
-                                    <input type="text" th:field="*{age}" id="age"/>
-                                </div>
-
-                                <div class="item">
-                                    <label for="email">Email</label>
-                                    <input type="text" th:field="*{email}" id="email"/>
-                                </div>
-
-                                <div class="item">
-                                    <label for="password">Password</label>
-                                    <input type="text" th:field="*{password}" id="password"/>
-                                </div>
-
-                                <div class="item">
-                                    <label for="role">Role</label>
-                                    <select name="role" id="role">
-                                        <option value="ADMIN">ADMIN</option>
-                                        <option value="USER">USER</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="bottomButtons">
-                                <div class="closeButton">
-                                    <form th:action="@{/admin}" th:method="get">
-                                        <input type="submit" value="Close">
+                                </td>
+                                <td class="tableButtonTd">
+                                    <form th:action="@{/change}" th:object="${user}" th:method="get">
+                                        <input type="hidden" th:name="id" th:value="${user.getId()}"/>
+                                        <input class="tableButton" id="editButton" type="submit" value="Edit"/>
                                     </form>
-                                </div>
-                                <div class="createButton">
-                                    <input type="submit" value="Edit"/>
-                                </div>
-                            </div>
-                            <!--                            <div th:if="${error.hasErrors()}">-->
-                            <!--                                <p>Пользователь с таким логином уже существует, попробуйте создать пользователя с другим логином</p>-->
-                            <!--                            </div>-->
-                        </form>
+                                </td>
+                                <td class="tableButtonTd">
+                                    <form th:action="@{/delete}" th:object="${user}" th:method="delete">
+                                        <input type="hidden" th:name="id" th:value="${user.getId()}"/>
+                                        <input class="tableButton" id="deleteButton" type="submit" value="Delete"/>
+                                    </form>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

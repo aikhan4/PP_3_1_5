@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>user info</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Verdana, Geneva, sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            height: 60px;
+            background: #1f1f1f;
+        }
+        .headerInner {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .headerInner .userInfo {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+        .headerInner .userInfo .item {
+            margin-left: 10px;
+            color: aliceblue;
+            font-size: 19px;
+        }
+        .headerInner .item:first-child {
+            margin-left: 20px;
+        }
+        .logoutWrapper {
+            text-decoration: none;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+        }
+        .logoutWrapper p {
+            color: #9d9d9d;
+            font-size: 19px;
+        }
+        .mainInner {
+            display: flex;
+            flex-direction: row;
+            min-height: 100%;
+            flex: 1;
+        }
+        .navWrapper {
+            width: 300px;
+            background: aliceblue;
+            color: aliceblue;
+            height: 100%;
+        }
+        .infoWrapper {
+            width: 100%;
+            background: #d0d0d0;
+            height: 100%;
+        }
+        .buttonWrapper {
+            width: 100%;
+            padding-left: 15px;
+            background: #1e46ec;
+            color: aliceblue;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .buttonWrapper:first-child {
+            margin-top: 20px;
+        }
+        .rolesWrapper {
+            display: flex;
+            align-items: center;
+        }
+        .preTable p {
+            font-size: 40px;
+            font-weight: bold;
+        }
+        .tableWrapper {
+            margin: 50px 50px 0 50px;
+        }
+        .mainInner {
+            height: 100%;
+        }
+        body, html {
+            height: 100%;
+        }
+        body {
+        }
+        main {
+            min-height: 100%;
+        }
+        .tableHead p {
+            font-weight: bold;
+        }
+        .tableBody table {
+            width: 100%;
+        }
+        .roleWrapper {
+            margin-right: 15px;
+        }
+        .roleWrapper:last-child {
+            margin-right: 0;
+        }
+        .tableBody th {
+            text-align: left;
+        }
+        tr {
+            border-top: 3px solid #abaaaa;
+            border-bottom: 3px solid #abaaaa;
+        }
+        tr:last-child {
+            border: 0;
+        }
+        .tableHead {
+            height: 100%;
+            background: #c4c2c2;
+            padding-left: 10px;
+        }
+        .table {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #abaaaa;
+        }
+        tbody .bodyTr {
+            background: #a8a6a6;
+        }
+        tr th:first-child p {
+            margin-left: 10px;
+        }
+        tr td:first-child p {
+            margin-left: 10px;
+        }
+        table {
+            border-spacing: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="headerInner">
+            <div class="userInfo">
+                <div class="item">
+                    <p th:text="${user.getEmail()}"></p>
+                </div>
+                <div class="item">
+                    <p> with roles: </p>
+                </div>
+                <div th:each="role : ${user.getRoles()}" class="item">
+                    <p th:text="${role.getRolename().substring(5)}"></p>
+                </div>
+            </div>
+            <a href="/logout" class="logoutWrapper">
+                <p>Logout</p>
+            </a>
+        </div>
+    </header>
+    <main>
+        <div class="mainInner">
+            <div class="navWrapper">
+                <a href="/user" class="buttonWrapper">
+                    <p>User</p>
+                </a>
+            </div>
+            <div class="infoWrapper">
+                <div class="tableWrapper">
+                    <div class="preTable">
+                        <p>User information-page</p>
+                    </div>
+                    <div class="table">
+                        <div class="tableHead">
+                            <p>About user</p>
+                        </div>
+                        <div class="tableBody">
+                            <table>
+                                <tr class="headTr">
+                                    <th><p>ID</p></th>
+                                    <th><p>First Name</p></th>
+                                    <th><p>Last Name</p></th>
+                                    <th><p>Age</p></th>
+                                    <th><p>Email</p></th>
+                                    <th><p>Role</p></th>
+                                </tr>
+                                <tbody>
+                                <tr class="bodyTr">
+                                    <td><p th:text="${user.getId()}"></p></td>
+                                    <td><p th:text="${user.getFirstName()}"></p></td>
+                                    <td><p th:text="${user.getLastName()}"></p></td>
+                                    <td><p th:text="${user.getAge()}"></p></td>
+                                    <td><p th:text="${user.getEmail()}"></p></td>
+                                    <td>
+                                        <div class="rolesWrapper">
+                                            <div th:each="role : ${user.getRoles()}" class="roleWrapper">
+                                                <p th:text="${role.getRolename().substring(5)}"></p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
