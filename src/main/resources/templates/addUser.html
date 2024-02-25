@@ -9,8 +9,6 @@
         body {
             margin: 0;
             font-family: Verdana, Geneva, sans-serif;
-            display: flex;
-            flex-direction: column;
         }
         header {
             height: 60px;
@@ -19,15 +17,8 @@
         .headerInner {
             width: 100%;
             height: 100%;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
         }
         .headerInner .userInfo {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
         }
         .headerInner .userInfo .item {
             margin-left: 10px;
@@ -40,9 +31,6 @@
         .logoutWrapper {
             text-decoration: none;
             height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             margin-right: 20px;
         }
         .logoutWrapper p {
@@ -50,8 +38,6 @@
             font-size: 19px;
         }
         .mainInner {
-            display: flex;
-            flex-direction: row;
             flex: 1;
         }
         .navWrapper {
@@ -68,8 +54,6 @@
             width: 100%;
             padding-left: 15px;
             color: #1e46ec;
-            display: flex;
-            align-items: center;
             text-decoration: none;
             cursor: pointer;
         }
@@ -77,10 +61,6 @@
             background: #1e46ec;
             color: aliceblue;
             margin-top: 20px;
-        }
-        .rolesWrapper {
-            display: flex;
-            align-items: center;
         }
         .infoName p {
             font-size: 40px;
@@ -103,12 +83,6 @@
         .tableBody table {
             width: 100%;
         }
-        .roleWrapper {
-            margin-right: 15px;
-        }
-        .roleWrapper:last-child {
-            margin-right: 0;
-        }
         .tableBody th {
             text-align: left;
         }
@@ -124,9 +98,6 @@
             background: #c4c2c2;
         }
         .table {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             border: 1px solid #abaaaa;
         }
         tbody .bodyTr {
@@ -167,15 +138,8 @@
             background: #b7b5b5;
             color: #343333;
         }
-        .headButtons {
-            display: flex;
-
-        }
         .tableBody .item {
-            display: flex;
-            flex-direction: column;
             margin-bottom: 50px;
-            align-items: center;
         }
         .tableBody .item input {
             width: 100%;
@@ -196,9 +160,6 @@
             margin-left: 10px;
         }
         .tableBody form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
         .tableBody .items {
             width: 100%;
@@ -221,10 +182,10 @@
         }
     </style>
 </head>
-<body>
+<body class="d-flex flex-column">
 <header>
-    <div class="headerInner">
-        <div class="userInfo">
+    <div class="headerInner d-flex align-items-center justify-content-between">
+        <div class="userInfo d-flex align-items-center">
             <div class="item">
                 <p th:text="${cookieUser.getEmail()}"></p>
             </div>
@@ -235,18 +196,18 @@
                 <p th:text="${role.getRolename().substring(5)}"></p>
             </div>
         </div>
-        <a href="/logout" class="logoutWrapper">
+        <a href="/logout" class="logoutWrapper d-flex align-items-center justify-content-center">
             <p>Logout</p>
         </a>
     </div>
 </header>
 <main>
-    <div class="mainInner">
+    <div class="mainInner d-flex">
         <div class="navWrapper">
-            <a href="/admin" class="buttonWrapper">
+            <a href="/admin" class="buttonWrapper d-flex align-items-center">
                 <p>Admin</p>
             </a>
-            <a href="/AdminInfo" class="buttonWrapper">
+            <a href="/AdminInfo" class="buttonWrapper d-flex align-items-center">
                 <p>User</p>
             </a>
         </div>
@@ -256,7 +217,7 @@
                     <div class="infoName">
                         <p>Admin panel</p>
                     </div>
-                    <div class="headButtons">
+                    <div class="headButtons d-flex">
                         <a href="/admin">
                             <p>
                                 Users Table
@@ -269,43 +230,43 @@
                         </a>
                     </div>
                 </div>
-                <div class="table">
+                <div class="table d-flex flex-column align-items-center">
                     <div class="tableHead">
                         <div class="headText">
                             <p>Add new user</p>
                         </div>
                     </div>
                     <div class="tableBody">
-                        <form th:method="post" th:action="@{/add}" th:object="${user}">
+                        <form th:method="post" th:action="@{/add}" th:object="${user}" class="d-flex flex-column align-items-center">
                                 <div class="items">
-                                    <div class="item">
+                                    <div class="item d-flex align-items-center flex-column">
                                         <label for="firstName">First Name</label>
                                         <input type="text" th:field="*{firstName}" id="firstName"/>
                                     </div>
 
-                                    <div class="item">
+                                    <div class="item d-flex align-items-center flex-column">
                                         <label for="lastName">Last Name</label>
                                         <input type="text" th:field="*{lastName}" id="lastName"/>
                                     </div>
 
-                                    <div class="item">
+                                    <div class="item d-flex align-items-center flex-column">
                                         <label for="age">Age</label>
                                         <input type="number" th:field="*{age}" id="age"/>
                                     </div>
 
-                                    <div class="item">
+                                    <div class="item d-flex align-items-center flex-column">
                                         <label for="email">Email</label>
                                         <input type="text" th:field="*{email}" id="email"/>
                                     </div>
 
-                                    <div class="item">
+                                    <div class="item d-flex align-items-center flex-column">
                                         <label for="password">Password</label>
                                         <input type="text" th:field="*{password}" id="password"/>
                                     </div>
 
-                                    <div class="item">
+                                    <div class="item d-flex align-items-center flex-column">
                                         <label for="role">Role</label>
-                                        <select name="role" id="role">
+                                        <select name="role" id="role" size="2">
                                             <option value="ADMIN">ADMIN</option>
                                             <option value="USER">USER</option>
                                         </select>

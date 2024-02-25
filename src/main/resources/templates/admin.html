@@ -3,212 +3,232 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>admin panel</title>
     <style>
         body {
             margin: 0;
             font-family: Verdana, Geneva, sans-serif;
-            display: flex;
-            flex-direction: column;
         }
+
         header {
             height: 60px;
             background: #1f1f1f;
         }
+
         .headerInner {
             width: 100%;
             height: 100%;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
         }
+
         .headerInner .userInfo {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
         }
+
         .headerInner .userInfo .item {
             margin-left: 10px;
             color: aliceblue;
             font-size: 19px;
         }
+
         .headerInner .item:first-child {
             margin-left: 20px;
         }
+
         .logoutWrapper {
             text-decoration: none;
             height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             margin-right: 20px;
         }
+
         .logoutWrapper p {
             color: #9d9d9d;
             font-size: 19px;
         }
+
         .mainInner {
-            display: flex;
-            flex-direction: row;
             min-height: 100%;
             flex: 1;
         }
+
         .navWrapper {
             width: 300px;
             background: aliceblue;
             color: aliceblue;
             height: 100%;
         }
+
         .infoWrapper {
             width: 100%;
             background: #d0d0d0;
             height: 100%;
         }
+
         .buttonWrapper {
             width: 100%;
             padding-left: 15px;
             color: #1e46ec;
-            display: flex;
-            align-items: center;
             text-decoration: none;
             cursor: pointer;
         }
+
         .buttonWrapper:first-child {
             background: #1e46ec;
             color: aliceblue;
             margin-top: 20px;
         }
+
         .rolesWrapper {
-            display: flex;
-            align-items: center;
         }
+
         .infoName p {
             font-size: 40px;
             font-weight: bold;
         }
+
         .tableWrapper {
             margin: 50px 50px 0 50px;
         }
+
         .mainInner {
             height: 100%;
         }
+
         body, html {
             height: 100%;
         }
+
         body {
         }
+
         main {
             min-height: 100%;
         }
+
         .tableHead p {
             font-weight: bold;
         }
+
         .tableBody table {
             width: 100%;
         }
+
         .roleWrapper {
             margin-right: 15px;
         }
+
         .roleWrapper:last-child {
             margin-right: 0;
         }
+
         .tableBody th {
             text-align: left;
         }
+
         tr {
             border-top: 3px solid #abaaaa;
             border-bottom: 3px solid #abaaaa;
         }
+
         tr:last-child {
             border: 0;
         }
+
         .tableHead {
             height: 100%;
             background: #c4c2c2;
             padding-left: 10px;
         }
+
         .table {
-            display: flex;
-            flex-direction: column;
             border: 1px solid #abaaaa;
         }
-        tbody .bodyTr {
+
+        tbody .even {
             background: #a8a6a6;
         }
+
         tr th:first-child p {
             margin-left: 10px;
         }
+
         tr td:first-child p {
             margin-left: 10px;
         }
+
         table {
             border-spacing: 0;
         }
+
         .tableButtonTd .tableButton {
             padding: 8px;
             border: 0;
             border-radius: 15%;
         }
+
         #editButton {
             background: #2359a4;
             color: #d0d0d0;
             cursor: pointer;
         }
+
         #deleteButton {
             background: #a20d0d;
             color: #d0d0d0;
             cursor: pointer;
         }
+
         .headButtons p {
             margin-block-start: 0;
             margin-block-end: 0;
         }
+
         .headButtons a {
             color: #1e46ec;
             padding: 15px;
             text-decoration: none;
             cursor: pointer;
         }
+
         .headButtons a:first-child {
             background: #b7b5b5;
             color: #343333;
         }
-        .headButtons {
-            display: flex;
 
-        }
         .tableBody .item {
-            display: flex;
-            flex-direction: column;
             margin-bottom: 50px;
             align-items: center;
         }
+
         .tableBody .item input {
             width: 100%;
         }
+
         .tableBody .item select {
             width: 100%;
         }
+
         .item label {
             margin-bottom: 20px;
         }
+
         .tableBody .item label {
             font-weight: bold;
         }
+
         p {
             margin-top: 1em;
         }
+
         .headText p {
             background: transparent;
         }
     </style>
 </head>
-<body>
+<body class="d-flex flex-column">
 <header>
-    <div class="headerInner">
-        <div class="userInfo">
+    <div class="headerInner d-flex flex-row align-items-center justify-content-between">
+        <div class="userInfo d-flex flex-row align-items-center">
             <div class="item">
                 <p th:text="${cookieUser.getEmail()}"></p>
             </div>
@@ -219,18 +239,18 @@
                 <p th:text="${role.getRolename().substring(5)}"></p>
             </div>
         </div>
-        <a href="/logout" class="logoutWrapper">
+        <a href="/logout" class="logoutWrapper d-flex align-items-center justify-content-center">
             <p>Logout</p>
         </a>
     </div>
 </header>
 <main>
-    <div class="mainInner">
+    <div class="mainInner d-flex">
         <div class="navWrapper">
-            <a href="/admin" class="buttonWrapper">
+            <a href="/admin" class="buttonWrapper d-flex align-items-center">
                 <p>Admin</p>
             </a>
-            <a href="/AdminInfo" class="buttonWrapper">
+            <a href="/AdminInfo" class="buttonWrapper d-flex align-items-center">
                 <p>User</p>
             </a>
         </div>
@@ -240,8 +260,8 @@
                     <div class="infoName">
                         <p>Admin panel</p>
                     </div>
-                    <div class="headButtons">
-                        <a href="/admin" >
+                    <div class="headButtons d-flex">
+                        <a href="/admin">
                             <p>
                                 Users Table
                             </p>
@@ -253,7 +273,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="table">
+                <div class="table d-flex flex-column">
                     <div class="tableHead">
                         <div class="headText">
                             <p>All users</p>
@@ -272,74 +292,89 @@
                                 <th><p>Delete</p></th>
                             </tr>
                             <tbody>
-                            <tr class="bodyTr" th:each="user : ${usersList}">
+                            <tr class="bodyTr" th:each="user, iterStat : ${usersList}"
+                                th:class="${iterStat.index % 2 == 0} ? 'even' : 'odd'">
                                 <td><p th:text="${user.getId()}"></p></td>
                                 <td><p th:text="${user.getFirstName()}"></p></td>
                                 <td><p th:text="${user.getLastName()}"></p></td>
                                 <td><p th:text="${user.getAge()}"></p></td>
                                 <td><p th:text="${user.getEmail()}"></p></td>
                                 <td>
-                                <div class="rolesWrapper">
-                                    <div th:each="role : ${user.getRoles()}" class="roleWrapper">
-                                        <p th:text="${role.getRolename().substring(5)}"></p>
+                                    <div class="rolesWrapper d-flex align-items-center">
+                                        <div th:each="role : ${user.getRoles()}" class="roleWrapper">
+                                            <p th:text="${role.getRolename().substring(5)}"></p>
+                                        </div>
                                     </div>
-                                </div>
                                 </td>
                                 <td class="tableButtonTd">
-                                    <button class="btn btn-info" data-bs-toggle="modal" th:data-bs-target="'#exampleModal-' + ${user.getId()}">
+                                    <button class="btn btn-info" data-bs-toggle="modal"
+                                            th:data-bs-target="'#exampleModal-' + ${user.getId()}">
                                         Edit
                                     </button>
-                                    <div class="modal fade" th:id="'exampleModal-' + ${user.getId()}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal fade" th:id="'exampleModal-' + ${user.getId()}" tabindex="-1"
+                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="exampleModalLabel">Edit user</h5>
-                                                    <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    <button class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="tableBody">
                                                         <form th:method="patch" th:action="@{/change}">
                                                             <div class="items">
-                                                                <div class="item">
+                                                                <div class="item d-flex flex-column">
                                                                     <label for="id">ID</label>
-                                                                    <input type="text" name="id" th:value="${user.getId()}" id="id" readonly/>
+                                                                    <input type="text" name="id"
+                                                                           th:value="${user.getId()}" id="id" readonly/>
                                                                 </div>
 
-                                                                <div class="item">
+                                                                <div class="item d-flex flex-column">
                                                                     <label for="firstName">First Name</label>
-                                                                    <input type="text" name="firstName" th:value="${user.getFirstName()}" id="firstName"/>
+                                                                    <input type="text" name="firstName"
+                                                                           th:value="${user.getFirstName()}"
+                                                                           id="firstName"/>
                                                                 </div>
 
-                                                                <div class="item">
+                                                                <div class="item d-flex flex-column">
                                                                     <label for="lastName">Last Name</label>
-                                                                    <input type="text" name="lastName" th:value="${user.getLastName()}" id="lastName"/>
+                                                                    <input type="text" name="lastName"
+                                                                           th:value="${user.getLastName()}"
+                                                                           id="lastName"/>
                                                                 </div>
 
-                                                                <div class="item">
+                                                                <div class="item d-flex flex-column">
                                                                     <label for="age">Age</label>
-                                                                    <input type="number" name="age" th:value="${user.getAge()}" id="age"/>
+                                                                    <input type="number" name="age"
+                                                                           th:value="${user.getAge()}" id="age"/>
                                                                 </div>
 
-                                                                <div class="item">
+                                                                <div class="item d-flex flex-column">
                                                                     <label for="email">Email</label>
-                                                                    <input type="text" name="email" th:value="${user.getEmail()}" id="email"/>
+                                                                    <input type="text" name="email"
+                                                                           th:value="${user.getEmail()}" id="email"/>
                                                                 </div>
 
-                                                                <div class="item">
+                                                                <div class="item d-flex flex-column">
                                                                     <label for="password">Password</label>
-                                                                    <input type="text" name="password" th:value="${user.getPassword()}" id="password"/>
+                                                                    <input type="text" name="password"
+                                                                           th:value="${user.getPassword()}"
+                                                                           id="password"/>
                                                                 </div>
 
-                                                                <div class="item">
+                                                                <div class="item d-flex flex-column">
                                                                     <label for="role">Role</label>
-                                                                    <select name="role" id="role">
+                                                                    <select name="role" id="role" size="2">
                                                                         <option value="ADMIN">ADMIN</option>
                                                                         <option value="USER">USER</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                <button type="button" class="btn btn-secondary"
+                                                                        data-bs-dismiss="modal">Close
+                                                                </button>
                                                                 <button type="submit" class="btn btn-info">Edit</button>
                                                             </div>
                                                         </form>
@@ -350,61 +385,79 @@
                                     </div>
                                 </td>
                                 <td class="tableButtonTd">
-                                    <button class="btn btn-danger" data-bs-toggle="modal" th:data-bs-target="'#exampleModal2-' + ${user.getId()}">
+                                    <button class="btn btn-danger" data-bs-toggle="modal"
+                                            th:data-bs-target="'#exampleModal2-' + ${user.getId()}">
                                         Delete
                                     </button>
-                                    <div class="modal fade" th:id="'exampleModal2-' + ${user.getId()}" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                                    <div class="modal fade" th:id="'exampleModal2-' + ${user.getId()}" tabindex="-1"
+                                         aria-labelledby="exampleModalLabel2" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="exampleModalLabel2">Delete user</h5>
-                                                    <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    <button class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="tableBody">
                                                         <form th:method="delete" th:action="@{/delete}">
                                                             <div class="items">
-                                                                <div class="item">
+                                                                <div class="item d-flex flex-column">
                                                                     <label for="id2">ID</label>
-                                                                    <input type="text" name="id" th:value="${user.getId()}" id="id2" readonly/>
+                                                                    <input type="text" name="id"
+                                                                           th:value="${user.getId()}" id="id2"
+                                                                           readonly/>
                                                                 </div>
 
-                                                                <div class="item">
+                                                                <div class="item d-flex flex-column">
                                                                     <label for="firstName2">First Name</label>
-                                                                    <input type="text" name="firstName" th:value="${user.getFirstName()}" id="firstName2" readonly/>
+                                                                    <input type="text" name="firstName"
+                                                                           th:value="${user.getFirstName()}"
+                                                                           id="firstName2" readonly/>
                                                                 </div>
 
-                                                                <div class="item">
+                                                                <div class="item d-flex flex-column">
                                                                     <label for="lastName2">Last Name</label>
-                                                                    <input type="text" name="lastName" th:value="${user.getLastName()}" id="lastName2" readonly/>
+                                                                    <input type="text" name="lastName"
+                                                                           th:value="${user.getLastName()}"
+                                                                           id="lastName2" readonly/>
                                                                 </div>
 
-                                                                <div class="item">
+                                                                <div class="item d-flex flex-column">
                                                                     <label for="age2">Age</label>
-                                                                    <input type="number" name="age" th:value="${user.getAge()}" id="age2" readonly/>
+                                                                    <input type="number" name="age"
+                                                                           th:value="${user.getAge()}" id="age2"
+                                                                           readonly/>
                                                                 </div>
 
-                                                                <div class="item">
+                                                                <div class="item d-flex flex-column">
                                                                     <label for="email2">Email</label>
-                                                                    <input type="text" name="email" th:value="${user.getEmail()}" id="email2" readonly/>
+                                                                    <input type="text" name="email"
+                                                                           th:value="${user.getEmail()}" id="email2"
+                                                                           readonly/>
                                                                 </div>
 
-                                                                <div class="item">
+                                                                <div class="item d-flex flex-column">
                                                                     <label for="password2">Password</label>
-                                                                    <input type="text" name="password" th:value="${user.getPassword()}" id="password2" readonly/>
+                                                                    <input type="text" name="password"
+                                                                           th:value="${user.getPassword()}"
+                                                                           id="password2" readonly/>
                                                                 </div>
 
-                                                                <div class="item">
+                                                                <div class="item d-flex flex-column">
                                                                     <label for="role2">Role</label>
-                                                                    <select name="role" id="role2" disabled>
+                                                                    <select name="role" id="role2" size="2" disabled>
                                                                         <option value="ADMIN">ADMIN</option>
                                                                         <option value="USER">USER</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                                                <button type="button" class="btn btn-secondary"
+                                                                        data-bs-dismiss="modal">Close
+                                                                </button>
+                                                                <button type="submit" class="btn btn-danger">Delete
+                                                                </button>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -422,7 +475,11 @@
         </div>
     </div>
 </main>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+        crossorigin="anonymous"></script>
 </body>
 </html>
