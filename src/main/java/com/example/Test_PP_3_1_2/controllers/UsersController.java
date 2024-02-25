@@ -26,7 +26,7 @@ public class UsersController {
         model.addAttribute("usersList", context.getBean("userService", UserService.class).findAll());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = ((UserWrapper) authentication.getPrincipal()).getUser();
-        model.addAttribute("user", user);
+        model.addAttribute("cookieUser", user);
         return "admin";
     }
     @GetMapping(value = "/add")
@@ -69,19 +69,8 @@ public class UsersController {
 
         return "redirect:/admin";
     }
-    @GetMapping(value = "/change")
-    public String changeUserPage(Model model, @RequestParam Long id) {
-        model.addAttribute("user", context.getBean("userService", UserService.class).findById(id).get());
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User cookieUser = ((UserWrapper) authentication.getPrincipal()).getUser();
-        model.addAttribute("cookieUser", cookieUser);
-        return "changeUser";
-    }
     @PatchMapping(value = "/change")
     public String changeUser(@ModelAttribute("user") User userUpdated, @RequestParam String role) {
-//        User userOld = context.getBean("userService", UserService.class).findById(userUpdated.getId()).get();
-//        userOld.setFirstName(userUpdated.getFirstName());
-//        userOld.setLastName(userUpdated.getLastName());
         if (role.equals("ADMIN")) {
             Role adminRole = context.getBean("roleService", RoleService.class).findById((long) 1).get();
             Role userRole = context.getBean("roleService", RoleService.class).findById((long) 2).get();

@@ -2,6 +2,8 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>add user</title>
     <style>
         body {
@@ -50,19 +52,16 @@
         .mainInner {
             display: flex;
             flex-direction: row;
-            min-height: 100%;
             flex: 1;
         }
         .navWrapper {
             width: 300px;
             background: aliceblue;
             color: aliceblue;
-            height: 100%;
         }
         .infoWrapper {
             width: 100%;
             background: #d0d0d0;
-            height: 100%;
             padding-bottom: 150px;
         }
         .buttonWrapper {
@@ -89,9 +88,6 @@
         }
         .tableWrapper {
             margin: 50px 50px 0 50px;
-        }
-        .mainInner {
-            height: 100%;
         }
         body, html {
             height: 100%;
@@ -193,16 +189,6 @@
         .item label {
             margin-bottom: 20px;
         }
-        .createButton input {
-            padding: 13px;
-            border:  0;
-            background: #228527;
-            border-radius: 5%;
-            color: aliceblue;
-            cursor: pointer;
-        }
-        .createButton {
-        }
         .tableHead {
             width: 100%;
         }
@@ -223,6 +209,15 @@
         }
         .tableBody .item label {
             font-weight: bold;
+        }
+        p {
+            margin-top: 1em;
+        }
+        .headText p {
+            background: transparent;
+        }
+        .table {
+            --bs-table-bg: 0;
         }
     </style>
 </head>
@@ -295,7 +290,7 @@
 
                                     <div class="item">
                                         <label for="age">Age</label>
-                                        <input type="text" th:field="*{age}" id="age"/>
+                                        <input type="number" th:field="*{age}" id="age"/>
                                     </div>
 
                                     <div class="item">
@@ -318,7 +313,7 @@
                                 </div>
 
                                 <div class="createButton">
-                                    <input type="submit" value="Add new user"/>
+                                    <button type="submit" class="btn btn-success">Add new user</button>
                                 </div>
                                 <div th:if="${error.hasErrors()}">
                                     <p>Пользователь с таким логином уже существует, попробуйте создать пользователя с другим логином</p>
@@ -330,5 +325,8 @@
         </div>
     </div>
 </main>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
 </body>
 </html>
