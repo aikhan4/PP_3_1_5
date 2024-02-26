@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    @Query("SELECT DISTINCT u FROM User u LEFT JOIN FETCH u.roles")
+    @Query("SELECT DISTINCT u FROM User u JOIN FETCH u.roles")
     List<User> findAll();
     Optional<User> findByEmail(String email);
     User save(User user);
