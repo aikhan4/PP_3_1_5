@@ -9,7 +9,6 @@
     <style>
         body {
             margin: 0;
-            font-family: Verdana, Geneva, sans-serif;
         }
 
         header {
@@ -126,8 +125,8 @@
         }
 
         tr {
-            border-top: 3px solid #abaaaa;
-            border-bottom: 3px solid #abaaaa;
+            border-top: 2px solid #abaaaa;
+            border-bottom: 2px solid #abaaaa;
         }
 
         tr:last-child {
@@ -136,7 +135,7 @@
 
         .tableHead {
             height: 100%;
-            background: #c4c2c2;
+            background: #c9c9c9;
             padding-left: 10px;
         }
 
@@ -145,7 +144,7 @@
         }
 
         tbody .even {
-            background: #a8a6a6;
+            background: #c9c9c9;
         }
 
         tr th:first-child p {
@@ -164,18 +163,6 @@
             padding: 8px;
             border: 0;
             border-radius: 15%;
-        }
-
-        #editButton {
-            background: #2359a4;
-            color: #d0d0d0;
-            cursor: pointer;
-        }
-
-        #deleteButton {
-            background: #a20d0d;
-            color: #d0d0d0;
-            cursor: pointer;
         }
 
         .headButtons p {
@@ -201,7 +188,7 @@
         }
 
         .tableBody .item input {
-            width: 100%;
+            width: auto;
         }
 
         .tableBody .item select {
@@ -223,6 +210,20 @@
         .headText p {
             background: transparent;
         }
+        .tableBody .item select {
+            width: 210px;
+        }
+        tbody {
+            background-color: #c5c5c5;
+        }
+        table {
+            background-color: #c7c0c0;
+        }
+        .headButtons a {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
     </style>
 </head>
 <body class="d-flex flex-column">
@@ -325,47 +326,47 @@
                                                         <form th:method="patch" th:action="@{/change}">
                                                             <div class="items">
                                                                 <div class="item d-flex flex-column">
-                                                                    <label for="id">ID</label>
-                                                                    <input type="text" name="id"
+                                                                    <label class="form-label" for="id">ID</label>
+                                                                    <input class="form-control" type="text" name="id"
                                                                            th:value="${user.getId()}" id="id" readonly/>
                                                                 </div>
 
                                                                 <div class="item d-flex flex-column">
-                                                                    <label for="firstName">First Name</label>
-                                                                    <input type="text" name="firstName"
+                                                                    <label class="form-label" for="firstName">First Name</label>
+                                                                    <input class="form-control" type="text" name="firstName"
                                                                            th:value="${user.getFirstName()}"
                                                                            id="firstName"/>
                                                                 </div>
 
                                                                 <div class="item d-flex flex-column">
-                                                                    <label for="lastName">Last Name</label>
-                                                                    <input type="text" name="lastName"
+                                                                    <label class="form-label" for="lastName">Last Name</label>
+                                                                    <input class="form-control" type="text" name="lastName"
                                                                            th:value="${user.getLastName()}"
                                                                            id="lastName"/>
                                                                 </div>
 
                                                                 <div class="item d-flex flex-column">
-                                                                    <label for="age">Age</label>
-                                                                    <input type="number" name="age"
+                                                                    <label class="form-label" for="age">Age</label>
+                                                                    <input class="form-control" type="number" name="age"
                                                                            th:value="${user.getAge()}" id="age"/>
                                                                 </div>
 
                                                                 <div class="item d-flex flex-column">
-                                                                    <label for="email">Email</label>
-                                                                    <input type="text" name="email"
+                                                                    <label class="form-label" for="email">Email</label>
+                                                                    <input class="form-control" type="text" name="email"
                                                                            th:value="${user.getEmail()}" id="email"/>
                                                                 </div>
 
                                                                 <div class="item d-flex flex-column">
-                                                                    <label for="password">Password</label>
-                                                                    <input type="text" name="password"
+                                                                    <label class="form-label" for="password">Password</label>
+                                                                    <input class="form-control" type="text" name="password"
                                                                            th:value="${user.getPassword()}"
                                                                            id="password"/>
                                                                 </div>
 
                                                                 <div class="item d-flex flex-column">
-                                                                    <label for="role">Role</label>
-                                                                    <select name="role" id="role" size="2">
+                                                                    <label class="form-label" for="role">Role</label>
+                                                                    <select class="form-control" name="role" id="role" size="2">
                                                                         <option value="ADMIN">ADMIN</option>
                                                                         <option value="USER">USER</option>
                                                                     </select>
@@ -403,50 +404,50 @@
                                                         <form th:method="delete" th:action="@{/delete}">
                                                             <div class="items">
                                                                 <div class="item d-flex flex-column">
-                                                                    <label for="id2">ID</label>
-                                                                    <input type="text" name="id"
+                                                                    <label class="form-label" for="id2">ID</label>
+                                                                    <input class="form-control" type="text" name="id"
                                                                            th:value="${user.getId()}" id="id2"
-                                                                           readonly/>
+                                                                           disabled/>
                                                                 </div>
 
                                                                 <div class="item d-flex flex-column">
-                                                                    <label for="firstName2">First Name</label>
-                                                                    <input type="text" name="firstName"
+                                                                    <label class="form-label" for="firstName2">First Name</label>
+                                                                    <input class="form-control" type="text" name="firstName"
                                                                            th:value="${user.getFirstName()}"
-                                                                           id="firstName2" readonly/>
+                                                                           id="firstName2" disabled/>
                                                                 </div>
 
                                                                 <div class="item d-flex flex-column">
-                                                                    <label for="lastName2">Last Name</label>
-                                                                    <input type="text" name="lastName"
+                                                                    <label class="form-label" for="lastName2">Last Name</label>
+                                                                    <input class="form-control" type="text" name="lastName"
                                                                            th:value="${user.getLastName()}"
-                                                                           id="lastName2" readonly/>
+                                                                           id="lastName2" disabled/>
                                                                 </div>
 
                                                                 <div class="item d-flex flex-column">
-                                                                    <label for="age2">Age</label>
-                                                                    <input type="number" name="age"
+                                                                    <label class="form-label" for="age2">Age</label>
+                                                                    <input class="form-control" type="number" name="age"
                                                                            th:value="${user.getAge()}" id="age2"
-                                                                           readonly/>
+                                                                           disabled/>
                                                                 </div>
 
                                                                 <div class="item d-flex flex-column">
-                                                                    <label for="email2">Email</label>
-                                                                    <input type="text" name="email"
+                                                                    <label class="form-label" for="email2">Email</label>
+                                                                    <input class="form-control" type="text" name="email"
                                                                            th:value="${user.getEmail()}" id="email2"
-                                                                           readonly/>
+                                                                           disabled/>
                                                                 </div>
 
                                                                 <div class="item d-flex flex-column">
-                                                                    <label for="password2">Password</label>
-                                                                    <input type="text" name="password"
+                                                                    <label class="form-label" for="password2">Password</label>
+                                                                    <input class="form-control" type="text" name="password"
                                                                            th:value="${user.getPassword()}"
-                                                                           id="password2" readonly/>
+                                                                           id="password2" disabled/>
                                                                 </div>
 
                                                                 <div class="item d-flex flex-column">
-                                                                    <label for="role2">Role</label>
-                                                                    <select name="role" id="role2" size="2" disabled>
+                                                                    <label class="form-label" for="role2">Role</label>
+                                                                    <select class="form-control" name="role" id="role2" size="2" disabled>
                                                                         <option value="ADMIN">ADMIN</option>
                                                                         <option value="USER">USER</option>
                                                                     </select>

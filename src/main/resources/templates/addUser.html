@@ -8,7 +8,6 @@
     <style>
         body {
             margin: 0;
-            font-family: Verdana, Geneva, sans-serif;
         }
         header {
             height: 60px;
@@ -87,15 +86,15 @@
             text-align: left;
         }
         tr {
-            border-top: 3px solid #abaaaa;
-            border-bottom: 3px solid #abaaaa;
+            border-top: 2px solid #abaaaa;
+            border-bottom: 2px solid #abaaaa;
         }
         tr:last-child {
             border: 0;
         }
         .tableHead {
             height: 100%;
-            background: #c4c2c2;
+            background: #c9c9c9;
         }
         .table {
             border: 1px solid #abaaaa;
@@ -116,14 +115,6 @@
             padding: 8px;
             border: 0;
             border-radius: 15%;
-        }
-        #editButton {
-            background: #2359a4;
-            color: #d0d0d0;
-        }
-        #deleteButton {
-            background: #a20d0d;
-            color: #d0d0d0;
         }
         .headButtons p {
             margin-block-start: 0;
@@ -179,6 +170,16 @@
         }
         .table {
             --bs-table-bg: 0;
+        }
+        tbody {
+            background-color: transparent;
+        }
+        table {
+            background-color: #c7c0c0;
+        }
+        .headButtons a {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
         }
     </style>
 </head>
@@ -240,33 +241,33 @@
                         <form th:method="post" th:action="@{/add}" th:object="${user}" class="d-flex flex-column align-items-center">
                                 <div class="items">
                                     <div class="item d-flex align-items-center flex-column">
-                                        <label for="firstName">First Name</label>
-                                        <input type="text" th:field="*{firstName}" id="firstName"/>
+                                        <label class="form-label" for="firstName">First Name</label>
+                                        <input class="form-control" type="text" th:field="*{firstName}" id="firstName"/>
                                     </div>
 
                                     <div class="item d-flex align-items-center flex-column">
-                                        <label for="lastName">Last Name</label>
-                                        <input type="text" th:field="*{lastName}" id="lastName"/>
+                                        <label class="form-label" for="lastName">Last Name</label>
+                                        <input class="form-control" type="text" th:field="*{lastName}" id="lastName"/>
                                     </div>
 
                                     <div class="item d-flex align-items-center flex-column">
-                                        <label for="age">Age</label>
-                                        <input type="number" th:field="*{age}" id="age"/>
+                                        <label class="form-label" for="age">Age</label>
+                                        <input class="form-control" type="number" th:field="*{age}" id="age"/>
                                     </div>
 
                                     <div class="item d-flex align-items-center flex-column">
-                                        <label for="email">Email</label>
-                                        <input type="text" th:field="*{email}" id="email"/>
+                                        <label class="form-label" for="email">Email</label>
+                                        <input class="form-control" type="text" th:field="*{email}" id="email"/>
                                     </div>
 
                                     <div class="item d-flex align-items-center flex-column">
-                                        <label for="password">Password</label>
-                                        <input type="text" th:field="*{password}" id="password"/>
+                                        <label class="form-label" for="password">Password</label>
+                                        <input class="form-control" type="text" th:field="*{password}" id="password"/>
                                     </div>
 
                                     <div class="item d-flex align-items-center flex-column">
-                                        <label for="role">Role</label>
-                                        <select name="role" id="role" size="2">
+                                        <label class="form-label" for="role">Role</label>
+                                        <select class="form-control" name="role" id="role" size="2">
                                             <option value="ADMIN">ADMIN</option>
                                             <option value="USER">USER</option>
                                         </select>
