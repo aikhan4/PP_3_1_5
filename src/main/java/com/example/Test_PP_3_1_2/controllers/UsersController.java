@@ -1,9 +1,7 @@
 package com.example.Test_PP_3_1_2.controllers;
 
-import com.example.Test_PP_3_1_2.models.Role;
 import com.example.Test_PP_3_1_2.models.User;
 import com.example.Test_PP_3_1_2.security.UserWrapper;
-import com.example.Test_PP_3_1_2.service.RoleService;
 import com.example.Test_PP_3_1_2.service.UserService;
 import com.example.Test_PP_3_1_2.util.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +9,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -30,64 +27,46 @@ public class UsersController {
         return "admin";
     }
     @GetMapping(value = "/add")
-    public String addUserPage(@ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
-        model.addAttribute("error", bindingResult);
+    public String addUserPage(@ModelAttribute User user, BindingResult bindingResult, Model model) {
+        model.addAttribute("bindingResult", bindingResult);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User cookieUser = ((UserWrapper) authentication.getPrincipal()).getUser();
         model.addAttribute("cookieUser", cookieUser);
         return "addUser";
     }
-    @Transactional
     @PostMapping(value = "/add")
-    public String addUser(@ModelAttribute("user") User user, BindingResult bindingResult, Model model, @RequestParam String role) {
+    public String addUser(@ModelAttribute("user") User user, @RequestParam String role, BindingResult bindingResult, Model model) {
 
-        context.getBean("userValidator", UserValidator.class).validate(user, bindingResult);
+        context.getBean("userValidator", UserValidator.class).addValidate(user, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute("error", bindingResult); // доработать на html странице addUser , добавить поле которое сообщает о том что пользователь создан, если была попытка создать пользователя
+            model.addAttribute("bindingResult", bindingResult); // доработать на html странице addUser , добавить поле которое сообщает о том что пользователь создан, если была попытка создать пользователя
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            User cookieUser = ((UserWrapper) authentication.getPrincipal()).getUser();
+            model.addAttribute("cookieUser", cookieUser);
             return "addUser";
         }
 
-        if (role.equals("ADMIN")) {
-            Role adminRole = context.getBean("roleService", RoleService.class).findById((long) 1).get();
-            Role userRole = context.getBean("roleService", RoleService.class).findById((long) 2).get();
-            user.addRole(adminRole);
-            user.addRole(userRole);
-            adminRole.addUser(user);
-            userRole.addUser(user);
-        } else if (role.equals("USER")) {
-            Role userRole = context.getBean("roleService", RoleService.class).findById((long) 2).get();
-            user.addRole(userRole);
-            userRole.addUser(user);
-        } else if (role.isEmpty()) {
-            Role userRole = context.getBean("roleService", RoleService.class).findById((long) 2).get();
-            user.addRole(userRole);
-            userRole.addUser(user);
-        }
-
-        context.getBean("userService", UserService.class).save(user);
+        context.getBean("userService", UserService.class).save(user, role);
 
         return "redirect:/admin";
     }
     @PatchMapping(value = "/change")
-    public String changeUser(@ModelAttribute("user") User userUpdated, @RequestParam String role) {
-        if (role.equals("ADMIN")) {
-            Role adminRole = context.getBean("roleService", RoleService.class).findById((long) 1).get();
-            Role userRole = context.getBean("roleService", RoleService.class).findById((long) 2).get();
-            userUpdated.addRole(adminRole);
-            userUpdated.addRole(userRole);
-            adminRole.addUser(userUpdated);
-            userRole.addUser(userUpdated);
-        } else if (role.equals("USER")) {
-            Role userRole = context.getBean("roleService", RoleService.class).findById((long) 2).get();
-            userUpdated.addRole(userRole);
-            userRole.addUser(userUpdated);
-        } else if (role.isEmpty()) {
-            Role userRole = context.getBean("roleService", RoleService.class).findById((long) 2).get();
-            userUpdated.addRole(userRole);
-            userRole.addUser(userUpdated);
+    public String changeUser(@ModelAttribute("user") User userUpdated, @RequestParam String role, Model model, BindingResult bindingResult) {
+
+        context.getBean("userValidator", UserValidator.class).changeValidate(userUpdated, bindingResult, role);
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("bindingResult", bindingResult);
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            User cookieUser = ((UserWrapper) authentication.getPrincipal()).getUser();
+            model.addAttribute("cookieUser", cookieUser);
+            model.addAttribute("user", userUpdated);
+            return "changeUser";
         }
-        context.getBean("userService", UserService.class).save(userUpdated);
+
+        context.getBean("userService", UserService.class).save(userUpdated, role);
+
         return "redirect:/admin";
     }
     @DeleteMapping(value = "/delete")

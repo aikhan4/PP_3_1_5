@@ -11,12 +11,12 @@ import java.util.List;
 import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    @Query("SELECT DISTINCT u FROM User u JOIN FETCH u.roles")
+    @Query("SELECT DISTINCT u FROM User u LEFT JOIN FETCH u.roles")
     List<User> findAll();
-    @Query("SELECT u FROM User u JOIN FETCH u.roles WHERE u.email = :email")
+    @Query("SELECT DISTINCT u FROM User u LEFT JOIN FETCH u.roles WHERE u.email = :email")
     Optional<User> findByEmail(String email);
     User save(User user);
-    @Query("SELECT u FROM User u JOIN FETCH u.roles WHERE u.id = :id")
+    @Query("SELECT DISTINCT u FROM User u LEFT JOIN FETCH u.roles WHERE u.id = :id")
     Optional<User> findById(Long id);
     void deleteById(Long id);
 }

@@ -253,11 +253,17 @@
                                     <div class="item d-flex align-items-center flex-column">
                                         <label class="form-label" for="age">Age</label>
                                         <input class="form-control" type="number" th:field="*{age}" id="age"/>
+                                        <div th:if="${bindingResult.hasFieldErrors('age')}">
+                                            <p>Некорректный возраст, попробуйте создать пользователя с другим возрастом</p>
+                                        </div>
                                     </div>
 
                                     <div class="item d-flex align-items-center flex-column">
                                         <label class="form-label" for="email">Email</label>
                                         <input class="form-control" type="text" th:field="*{email}" id="email"/>
+                                        <div th:if="${bindingResult.hasFieldErrors('email')}">
+                                            <p>Пользователь с таким логином уже существует, попробуйте создать пользователя с другим логином</p>
+                                        </div>
                                     </div>
 
                                     <div class="item d-flex align-items-center flex-column">
@@ -276,9 +282,6 @@
 
                                 <div class="createButton">
                                     <button type="submit" class="btn btn-success">Add new user</button>
-                                </div>
-                                <div th:if="${error.hasErrors()}">
-                                    <p>Пользователь с таким логином уже существует, попробуйте создать пользователя с другим логином</p>
                                 </div>
                         </form>
                     </div>

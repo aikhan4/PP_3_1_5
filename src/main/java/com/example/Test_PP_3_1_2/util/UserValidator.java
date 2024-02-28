@@ -14,24 +14,42 @@ import org.springframework.validation.Validator;
 import java.util.Optional;
 
 @Component
-public class UserValidator implements Validator {
+public class UserValidator {
     private final UserService userService;
 
     public UserValidator(@Autowired UserService userService) {
         this.userService = userService;
     }
 
-    @Override
-    public boolean supports(Class<?> aClass) {
-        return User.class.equals(aClass);
+    public void addValidate(User authTryUser, Errors errors) throws UsernameNotFoundException {
+
+        Optional<User> user = userService.findByEmail(authTryUser.getEmail());
+
+        if ((authTryUser.getAge() == null) || (authTryUser.getAge() < 0) || (authTryUser.getAge() > 127)) {
+            errors.rejectValue("age", "Некорректный возраст");
+        }
+
+        if (user.isPresent()) {
+            errors.rejectValue("email", "Пользователь с таким логином уже существует");
+        }
+
     }
 
-    @Override
-    public void validate(Object o, Errors errors) throws UsernameNotFoundException {
-        User authTryUser = (User) o;
+    public void changeValidate(User authTryUser, Errors errors, String oldEmail) throws UsernameNotFoundException {
+
         Optional<User> user = userService.findByEmail(authTryUser.getEmail());
+
+        if ((authTryUser.getAge() == null) || (authTryUser.getAge() < 0) || (authTryUser.getAge() > 127)) {
+            errors.rejectValue("age", "Некорректный возраст");
+        }
+
         if (user.isPresent()) {
-            errors.rejectValue("email", "", "Пользователь с таким логином уже существует");
+            if (user.get().getEmail().equals(oldEmail)) {
+
+            } else {
+                errors.rejectValue("email", "Пользователь с таким логином уже существует");
+            }
         }
     }
+
 }
