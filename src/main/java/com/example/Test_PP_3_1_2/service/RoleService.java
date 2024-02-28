@@ -17,19 +17,25 @@ public class RoleService {
     public RoleService(@Autowired RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
     }
+
     public List<Role> findAll() {
      return roleRepository.findAll();
     }
+
     public Optional<Role> findByRolename(String rolename) {
      return roleRepository.findByRolename(rolename);
     }
+
     public Role save(Role role) {
      return roleRepository.save(role);
     }
+
     public Optional<Role> findById(Long id) {
      return roleRepository.findById(id);
     }
+
     public void deleteById(Long id) {
      roleRepository.deleteById(id);
     }
+
 }

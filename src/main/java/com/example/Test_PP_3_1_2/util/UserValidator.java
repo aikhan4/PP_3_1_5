@@ -50,6 +50,7 @@ public class UserValidator {
                 errors.rejectValue("email", "Пользователь с таким логином уже существует");
             }
         }
+
     }
 
 }

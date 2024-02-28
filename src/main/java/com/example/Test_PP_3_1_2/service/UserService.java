@@ -61,6 +61,7 @@ public class UserService{
 
         return userRepository.save(user);
     }
+
     public User saveWhenChange(User user, String role) {
 
         if (!(user.getPassword().equals(findById(user.getId()).get().getPassword()))) {

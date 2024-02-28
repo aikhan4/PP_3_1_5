@@ -21,12 +21,18 @@ public class UserServiceToConfig implements UserDetailsService {
     public UserServiceToConfig(@Autowired UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+
         Optional<User> user = userRepository.findByEmail(s);
+
         if (user.isEmpty()) {
             throw new UsernameNotFoundException("пользователь не существует");
         }
+
         return new UserWrapper(user.get());
+
     }
+
 }
