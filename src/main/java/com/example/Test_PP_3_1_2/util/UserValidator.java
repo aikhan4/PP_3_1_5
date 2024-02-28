@@ -35,7 +35,7 @@ public class UserValidator {
 
     }
 
-    public void changeValidate(User authTryUser, Errors errors, String oldEmail) throws UsernameNotFoundException {
+    public void changeValidate(User authTryUser, Errors errors) throws UsernameNotFoundException {
 
         Optional<User> user = userService.findByEmail(authTryUser.getEmail());
 
@@ -44,7 +44,7 @@ public class UserValidator {
         }
 
         if (user.isPresent()) {
-            if (user.get().getEmail().equals(oldEmail)) {
+            if (authTryUser.getEmail().equals(userService.findById(authTryUser.getId()).get().getEmail())) {
 
             } else {
                 errors.rejectValue("email", "Пользователь с таким логином уже существует");

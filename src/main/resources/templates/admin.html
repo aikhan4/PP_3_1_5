@@ -472,6 +472,14 @@
                         </table>
                     </div>
                 </div>
+                <div th:if="${bindingResult.hasErrors()}">
+                    <p th:if="${bindingResult.hasFieldErrors('email')}" style="color: red">
+                        При изменении пользователя произошла ошибка. Введенный email уже занят, придумайте другое.
+                    </p>
+                    <p th:if="${bindingResult.hasFieldErrors('age')}" style="color: red">
+                        При изменении пользователя произошла ошибка. Введенный возраст был некорректным.
+                    </p>
+                </div>
             </div>
         </div>
     </div>

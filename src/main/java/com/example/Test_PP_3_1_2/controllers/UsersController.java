@@ -19,11 +19,12 @@ public class UsersController {
     private ApplicationContext context;
 
     @GetMapping(value = "/admin")
-    public String users(Model model) {
+    public String users(@ModelAttribute User user, Model model, BindingResult bindingResult) {
         model.addAttribute("usersList", context.getBean("userService", UserService.class).findAll());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = ((UserWrapper) authentication.getPrincipal()).getUser();
-        model.addAttribute("cookieUser", user);
+        User cookieUser = ((UserWrapper) authentication.getPrincipal()).getUser();
+        model.addAttribute("bindingResult", bindingResult);
+        model.addAttribute("cookieUser", cookieUser);
         return "admin";
     }
     @GetMapping(value = "/add")
@@ -35,37 +36,37 @@ public class UsersController {
         return "addUser";
     }
     @PostMapping(value = "/add")
-    public String addUser(@ModelAttribute("user") User user, @RequestParam String role, BindingResult bindingResult, Model model) {
+    public String addUser(@ModelAttribute("user") User user, @RequestParam(required = false) String role, BindingResult bindingResult, Model model) {
 
         context.getBean("userValidator", UserValidator.class).addValidate(user, bindingResult);
-
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("bindingResult", bindingResult); // доработать на html странице addUser , добавить поле которое сообщает о том что пользователь создан, если была попытка создать пользователя
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            User cookieUser = ((UserWrapper) authentication.getPrincipal()).getUser();
-            model.addAttribute("cookieUser", cookieUser);
-            return "addUser";
-        }
-
-        context.getBean("userService", UserService.class).save(user, role);
-
-        return "redirect:/admin";
-    }
-    @PatchMapping(value = "/change")
-    public String changeUser(@ModelAttribute("user") User userUpdated, @RequestParam String role, Model model, BindingResult bindingResult) {
-
-        context.getBean("userValidator", UserValidator.class).changeValidate(userUpdated, bindingResult, role);
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("bindingResult", bindingResult);
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             User cookieUser = ((UserWrapper) authentication.getPrincipal()).getUser();
             model.addAttribute("cookieUser", cookieUser);
-            model.addAttribute("user", userUpdated);
-            return "changeUser";
+            return "addUser";
         }
 
-        context.getBean("userService", UserService.class).save(userUpdated, role);
+        context.getBean("userService", UserService.class).saveWhenAdd(user, role);
+
+        return "redirect:/admin";
+    }
+    @PatchMapping(value = "/change")
+    public String changeUser(@ModelAttribute("user") User userUpdated, @RequestParam(required = false) String role, Model model, BindingResult bindingResult) {
+
+        context.getBean("userValidator", UserValidator.class).changeValidate(userUpdated, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            User cookieUser = ((UserWrapper) authentication.getPrincipal()).getUser();
+            model.addAttribute("cookieUser", cookieUser);
+            model.addAttribute("usersList", context.getBean("userService", UserService.class).findAll());
+            model.addAttribute("bindingResult", bindingResult);
+            return "admin";
+        }
+
+        context.getBean("userService", UserService.class).saveWhenChange(userUpdated, role);
 
         return "redirect:/admin";
     }
