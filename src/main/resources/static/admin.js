@@ -39,6 +39,7 @@ function deleteUser(userId) {
         method: 'DELETE'
     })
         .then(response => {
+            fetchUsers();
             return response.json();
         })
         .then(data => {
@@ -165,7 +166,6 @@ function populateTable(data) {
             deleteUser(userId);
             // Предотвращаем стандартное поведение кнопки
 
-            fetchUsers();
         });
     });
 }
