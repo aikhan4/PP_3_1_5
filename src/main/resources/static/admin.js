@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+    fetchCurrentUserAndPopulateHeader();
     fetchUsers();
 });
 
@@ -47,6 +48,45 @@ function deleteUser(userId) {
             fetchUsers();
         })
 }
+
+function addEventListeners() {
+
+}
+
+function fetchCurrentUser() {
+    fetch('http://localhost:8080/api/getCurrentUser')
+        .then(response => {
+            return response.json();
+        })
+}
+
+function fetchCurrentUserAndPopulateHeader() {
+    fetch('http://localhost:8080/api/getCurrentUser')
+        .then(response => {
+            return response.json();
+        })
+        .then(user => {
+            populateHeader(user);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+function populateHeader(user) {
+    // Получаем элементы для заполнения
+    let emailElement = document.querySelector('.userInfo .item:first-child p');
+    let rolesElement = document.querySelector('.userInfo .item:nth-child(2) p');
+    let roleNamesElement = document.querySelector('.userInfo .item:nth-child(3) p');
+
+    // Заполняем элементы данными пользователя
+    emailElement.textContent = user.email;
+    roleNamesElement.textContent = concatenateRoleNames(user.roles);
+}
+
+// Вызываем функцию при загрузке страницы
+fetchCurrentUserAndPopulateHeader();
+
 
 function populateTable(data) {
     let tableBody = document.querySelector('.tableBody table tbody');
