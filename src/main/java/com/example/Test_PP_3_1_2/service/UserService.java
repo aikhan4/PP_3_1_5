@@ -1,6 +1,7 @@
 package com.example.Test_PP_3_1_2.service;
 
 import com.example.Test_PP_3_1_2.dao.UserRepository;
+import com.example.Test_PP_3_1_2.dto.UserDTO;
 import com.example.Test_PP_3_1_2.models.Role;
 import com.example.Test_PP_3_1_2.models.User;
 import com.example.Test_PP_3_1_2.security.UserWrapper;
@@ -38,7 +39,10 @@ public class UserService{
         return userRepository.findAll();
     }
 
-    public User saveWhenAdd(User user, String role) {
+    public User saveWhenAdd(UserDTO userDTO, String role) {
+
+        User user = new User();
+        user.convertDTOtoUser(userDTO);
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
@@ -62,7 +66,10 @@ public class UserService{
         return userRepository.save(user);
     }
 
-    public User saveWhenChange(User user, String role) {
+    public User saveWhenChange(UserDTO userDTO, String role) {
+
+        User user = new User();
+        user.convertDTOtoUser(userDTO);
 
         if (!(user.getPassword().equals(findById(user.getId()).get().getPassword()))) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));

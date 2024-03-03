@@ -1,5 +1,6 @@
 package com.example.Test_PP_3_1_2.util;
 
+import com.example.Test_PP_3_1_2.dto.UserDTO;
 import com.example.Test_PP_3_1_2.models.User;
 import com.example.Test_PP_3_1_2.security.UserWrapper;
 import com.example.Test_PP_3_1_2.service.UserService;
@@ -21,33 +22,34 @@ public class UserValidator {
         this.userService = userService;
     }
 
-    public void addValidate(User authTryUser, Errors errors) throws UsernameNotFoundException {
+    public void addValidate(UserDTO userCreateTry, Errors errors) throws UsernameNotFoundException {
 
-        Optional<User> user = userService.findByEmail(authTryUser.getEmail());
+        Optional<User> user = userService.findByEmail(userCreateTry.getEmail());
 
-        if ((authTryUser.getAge() == null) || (authTryUser.getAge() < 0) || (authTryUser.getAge() > 127)) {
-            errors.rejectValue("age", "Некорректный возраст");
+        if ((userCreateTry.getAge() == null) || (userCreateTry.getAge() < 0) || (userCreateTry.getAge() > 127)) {
+            errors.reject("age", "Некорректный возраст");
         }
 
         if (user.isPresent()) {
-            errors.rejectValue("email", "Пользователь с таким логином уже существует");
+            errors.reject("email", "Пользователь с таким логином уже существуе" +
+                    "т");
         }
 
     }
 
-    public void changeValidate(User authTryUser, Errors errors) throws UsernameNotFoundException {
+    public void changeValidate(UserDTO userChangeTry, Errors errors) throws UsernameNotFoundException {
 
-        Optional<User> user = userService.findByEmail(authTryUser.getEmail());
+        Optional<User> user = userService.findByEmail(userChangeTry.getEmail());
 
-        if ((authTryUser.getAge() == null) || (authTryUser.getAge() < 0) || (authTryUser.getAge() > 127)) {
-            errors.rejectValue("age", "Некорректный возраст");
+        if ((userChangeTry.getAge() == null) || (userChangeTry.getAge() < 0) || (userChangeTry.getAge() > 127)) {
+            errors.reject("age", "Некорректный возраст");
         }
 
         if (user.isPresent()) {
-            if (authTryUser.getEmail().equals(userService.findById(authTryUser.getId()).get().getEmail())) {
+            if (userChangeTry.getEmail().equals(userService.findById(userChangeTry.getId()).get().getEmail())) {
 
             } else {
-                errors.rejectValue("email", "Пользователь с таким логином уже существует");
+                errors.reject("email", "Пользователь с таким логином уже существует");
             }
         }
 

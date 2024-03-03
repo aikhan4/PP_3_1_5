@@ -1,5 +1,7 @@
 package com.example.Test_PP_3_1_2.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,7 @@ public class Role {
     private Long id;
     @Column
     private String rolename;
+    @JsonBackReference
     @ManyToMany(mappedBy = "roles")
     private List<User> users;
 

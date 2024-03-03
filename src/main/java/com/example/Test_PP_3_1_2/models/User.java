@@ -1,6 +1,10 @@
 package com.example.Test_PP_3_1_2.models;
 
 
+import com.example.Test_PP_3_1_2.dto.UserDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +26,7 @@ public class User {
     private String email;
     @Column
     private String password;
+    @JsonManagedReference
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(
             name = "user_role",
@@ -39,6 +44,15 @@ public class User {
         this.age = age;
         this.email = email;
         this.password = password;
+    }
+
+    public void convertDTOtoUser (UserDTO userDTO) {
+        this.setId(userDTO.getId());
+        this.setFirstName(userDTO.getFirstName());
+        this.setLastName(userDTO.getLastName());
+        this.setAge(userDTO.getAge());
+        this.setEmail(userDTO.getEmail());
+        this.setPassword(userDTO.getPassword());
     }
 
     public void addRole(Role role) {
