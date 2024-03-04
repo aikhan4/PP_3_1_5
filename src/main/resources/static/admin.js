@@ -323,7 +323,7 @@ function populateTable(data) {
             </td>
             
             <td class="tableButtonTd">
-                <button class="btn btn-danger" data-bs-toggle="modal"
+                <button class="btn btn-danger btn-danger-open" data-bs-toggle="modal"
                         data-bs-target="#exampleModal2-${user.id}">
                     Delete
                 </button>
@@ -411,6 +411,11 @@ function populateTable(data) {
 
         tableBody.appendChild(row);
 
+        let deleteButtons = row.querySelector('.btn-danger-open');
+        deleteButtons.addEventListener('click', function() {
+            fillDeleteForm(user);
+        });
+
         let editButtons = row.querySelector('.btn-info-open');
         editButtons.addEventListener('click', function() {
             fillEditForm(user);
@@ -418,26 +423,6 @@ function populateTable(data) {
 
 
     });
-
-    // // Добавляем обработчики событий на кнопки "Edit"
-    // let editButtons = document.querySelectorAll('.btn-info-open');
-    // editButtons.forEach((button, index) => {
-    //     button.addEventListener('click', function() {
-    //         let user = data[index];
-    //         fillEditForm(user);
-    //     });
-    // });
-
-    // data.forEach(user => {
-    //     let deleteButton = row.querySelector('.btn-danger-submit'); // Найти кнопку "Delete" в текущей строке таблицы
-    //     deleteButton.addEventListener('click', function(event) {
-    //         event.preventDefault();
-    //         let row = event.target.closest('tr');
-    //         let userId = user.id;
-    //         deleteUser(userId);
-    //         // row.remove();
-    //     });
-    // });
 
 }
 
@@ -496,4 +481,22 @@ function fillEditForm(user) {
                 console.error('Error:', error);
             });
     });
+}
+
+function fillDeleteForm(user) {
+    // Получаем элементы формы для редактирования
+    // let idInput = document.getElementById(`id2-${user.id}`);
+    let firstNameInput = document.getElementById(`firstName2-${user.id}`);
+    let lastNameInput = document.getElementById(`lastName2-${user.id}`);
+    let ageInput = document.getElementById(`age2-${user.id}`);
+    let emailInput = document.getElementById(`email2-${user.id}`);
+    let passwordInput = document.getElementById(`password2-${user.id}`);
+
+    // Заполняем форму данными пользователя
+    // idInput.value = user.id;
+    firstNameInput.value = user.firstName;
+    lastNameInput.value = user.lastName;
+    ageInput.value = user.age;
+    emailInput.value = user.email;
+    passwordInput.value = user.password;
 }
