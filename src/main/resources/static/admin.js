@@ -73,8 +73,8 @@ function addUser(url, data) {
 function addEventListeners() {
     const navAdmin = document.querySelector('.nav-admin');
     const navUser = document.querySelector('.nav-user');
-    const usersTableBtn = document.querySelector('.users-table-btnn');
-    const newUserBtn = document.querySelector('.new-user-btn');
+    const usersTableBtn = document.querySelectorAll('.users-table-btnn');
+    const newUserBtn = document.querySelectorAll('.new-user-btn');
 
     const tableWrapper1 = document.querySelector('.tableWrapper1');
     const tableWrapper2 = document.querySelector('.tableWrapper2');
@@ -93,7 +93,6 @@ function addEventListeners() {
 
         navUser.style.background = "aliceblue";
         navUser.style.color = "#1e46ec";
-
     });
 
     navUser.addEventListener('click', function() {
@@ -110,22 +109,33 @@ function addEventListeners() {
         navAdmin.style.color = "#1e46ec";
     });
 
-    usersTableBtn.addEventListener('click', function() {
-        tableWrapper1.style.display = 'block';
-        tableWrapper2.style.display = 'none';
-        tableWrapper3.style.display = 'none';
+    usersTableBtn.forEach(btn => {
+        btn.addEventListener('click', function() {
+            tableWrapper1.style.display = 'block';
+            tableWrapper2.style.display = 'none';
+            tableWrapper3.style.display = 'none';
+            //
+            // btn.style.background = '#b7b5b5';
+            // btn.style.color = '#343333';
+
+        });
     });
 
-    newUserBtn.addEventListener('click', function() {
-        tableWrapper1.style.display = 'none';
-        tableWrapper2.style.display = 'none';
-        tableWrapper3.style.display = 'block';
+    newUserBtn.forEach(btn => {
+        btn.addEventListener('click', function() {
+            tableWrapper1.style.display = 'none';
+            tableWrapper2.style.display = 'none';
+            tableWrapper3.style.display = 'block';
+            //
+            // btn.style.background = '#b7b5b5';
+            // btn.style.color = '#343333';
+
+        });
 
     });
 
     let addForm = document.querySelector('.tableWrapper3 form');
     addForm.addEventListener('submit', function(event) {
-
         event.preventDefault(); // Предотвращаем отправку формы по умолчанию
 
         // Создаем объект с данными формы
@@ -172,6 +182,7 @@ function addEventListeners() {
             });
     });
 }
+
 
 function fillSoloUserTable() {
     // Выполняем запрос на получение данных о текущем пользователе
