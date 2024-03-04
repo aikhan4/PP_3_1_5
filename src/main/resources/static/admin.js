@@ -42,8 +42,6 @@ function deleteUser(userId) {
             return response.json();
         })
         .then(data => {
-            // Если удаление прошло успешно, обновляем таблицу
-            fetchUsers();
         })
 }
 
@@ -138,7 +136,7 @@ function addEventListeners() {
             email: document.getElementById('email3').value,
             password: document.getElementById('password3').value,
             role: (document.getElementById('role3').value !== undefined && document.getElementById('role3').value !== '' ? document.getElementById('role3').value : 'USER')
-    };
+        };
 
         // Отправляем данные на сервер с помощью fetch
         fetch('http://localhost:8080/api/add', {
@@ -249,11 +247,11 @@ function populateTable(data) {
             <td>${user.email}</td>
             <td>${concatenateRoleNames(user.roles)}</td>
             <td class="tableButtonTd">
-                <button class="btn btn-info btn-info-open" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal-1">
+                <button class="btn btn-info btn-info-open" data-user-id="${user.id}" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal1-${user.id}">
                     Edit
                 </button>
-                <div class="modal fade" id="exampleModal-1" tabindex="-1"
+                <div class="modal fade exampleModal-1" id="exampleModal1-${user.id}" tabindex="-1"
                      aria-labelledby="exampleModalLabel1" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -267,44 +265,44 @@ function populateTable(data) {
                                     <form>
                                         <div class="items">
                                             <div class="item d-flex flex-column">
-                                                <label class="form-label" for="id1">ID</label>
+                                                <label class="form-label" for="id1-${user.id}">ID</label>
                                                 <input class="form-control" type="text" name="id"
-                                                       id="id1" readonly/>
+                                                       id="id1-${user.id}" readonly/>
                                             </div>
 
                                             <div class="item d-flex flex-column">
-                                                <label class="form-label" for="firstName1">First Name</label>
+                                                <label class="form-label" for="firstName1-${user.id}">First Name</label>
                                                 <input class="form-control" type="text" name="firstName"
-                                                       id="firstName1"/>
+                                                       id="firstName1-${user.id}"/>
                                             </div>
 
                                             <div class="item d-flex flex-column">
-                                                <label class="form-label" for="lastName1">Last Name</label>
+                                                <label class="form-label" for="lastName1-${user.id}">Last Name</label>
                                                 <input class="form-control" type="text" name="lastName"
-                                                       id="lastName1"/>
+                                                       id="lastName1-${user.id}"/>
                                             </div>
 
                                             <div class="item d-flex flex-column">
-                                                <label class="form-label" for="age1">Age</label>
+                                                <label class="form-label" for="age1-${user.id}">Age</label>
                                                 <input class="form-control" type="number" name="age"
-                                                       id="age1"/>
+                                                       id="age1-${user.id}"/>
                                             </div>
 
                                             <div class="item d-flex flex-column">
-                                                <label class="form-label" for="email1">Email</label>
+                                                <label class="form-label" for="email1-${user.id}">Email</label>
                                                 <input class="form-control" type="text" name="email"
-                                                       id="email1"/>
+                                                       id="email1-${user.id}"/>
                                             </div>
 
                                             <div class="item d-flex flex-column">
-                                                <label class="form-label" for="password1">Password</label>
+                                                <label class="form-label" for="password1-${user.id}">Password</label>
                                                 <input class="form-control" type="text" name="password"
-                                                       id="password1"/>
+                                                       id="password1-${user.id}"/>
                                             </div>
 
                                             <div class="item d-flex flex-column">
-                                                <label class="form-label" for="role1">Role</label>
-                                                <select class="form-control" name="role" id="role1" size="2">
+                                                <label class="form-label" for="role1-${user.id}">Role</label>
+                                                <select class="form-control" name="role" id="role1-${user.id}" size="2">
                                                     <option value="ADMIN">ADMIN</option>
                                                     <option value="USER">USER</option>
                                                 </select>
@@ -323,48 +321,135 @@ function populateTable(data) {
                     </div>
                 </div>
             </td>
+            
             <td class="tableButtonTd">
-                <button class="btn btn-danger btn-info-delete" data-user-id="${user.id}">Delete</button>
+                <button class="btn btn-danger" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal2-${user.id}">
+                    Delete
+                </button>
+                <div class="modal fade" id="exampleModal2-${user.id}" tabindex="-1"
+                     aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel2">Delete user</h5>
+                                <button class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="tableBody">
+                                    <form>
+                                        <div class="items">
+                                            <div class="item d-flex flex-column">
+                                                <label class="form-label" for="id2-${user.id}">ID</label>
+                                                <input class="form-control" type="text" name="id-${user.id}"
+                                                       id="id2" readonly/>
+                                            </div>
+
+                                            <div class="item d-flex flex-column">
+                                                <label class="form-label" for="firstName2-${user.id}">First Name</label>
+                                                <input class="form-control" type="text" name="firstName"
+                                                       id="firstName2-${user.id}" readonly/>
+                                            </div>
+
+                                            <div class="item d-flex flex-column">
+                                                <label class="form-label" for="lastName2-${user.id}">Last Name</label>
+                                                <input class="form-control" type="text" name="lastName"
+                                                       id="lastName2-${user.id}" readonly/>
+                                            </div>
+
+                                            <div class="item d-flex flex-column">
+                                                <label class="form-label" for="age2-${user.id}">Age</label>
+                                                <input class="form-control" type="number" name="age"
+                                                       id="age2-${user.id}" readonly/>
+                                            </div>
+
+                                            <div class="item d-flex flex-column">
+                                                <label class="form-label" for="email2-${user.id}">Email</label>
+                                                <input class="form-control" type="text" name="email"
+                                                       id="email2-${user.id}" readonly/>
+                                            </div>
+
+                                            <div class="item d-flex flex-column">
+                                                <label class="form-label" for="password2-${user.id}">Password</label>
+                                                <input class="form-control" type="text" name="password"
+                                                       id="password2-${user.id}" readonly/>
+                                            </div>
+
+                                            <div class="item d-flex flex-column">
+                                                <label class="form-label" for="role2-${user.id}">Role</label>
+                                                <select class="form-control" name="role" id="role2-${user.id}" size="2" disabled>
+                                                    <option value="ADMIN">ADMIN</option>
+                                                    <option value="USER">USER</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close
+                                            </button>
+                                            <button type="submit" class="btn btn-danger btn-danger-submit" data-user-id="${user.id}" data-bs-dismiss="modal">Delete
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </td>
         `;
-        tableBody.appendChild(row);
-    });
 
-    // Добавляем обработчики событий на кнопки "Edit"
-    let editButtons = document.querySelectorAll('.btn-info-open');
-    editButtons.forEach((button, index) => {
-        button.addEventListener('click', function() {
-            let user = data[index];
+        // Удаление строки из таблицы
+        let deleteButton = row.querySelector('.btn-danger-submit');
+        deleteButton.dataset.userId = user.id; // Добавляем идентификатор пользователя в атрибут data
+        deleteButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            let userId = event.target.dataset.userId; // Получаем идентификатор пользователя из атрибута data
+            deleteUser(userId);
+        });
+
+        tableBody.appendChild(row);
+
+        let editButtons = row.querySelector('.btn-info-open');
+        editButtons.addEventListener('click', function() {
             fillEditForm(user);
         });
+
+
     });
 
-    // Добавляем обработчики событий на кнопки "Delete"
-    let deleteButtons = document.querySelectorAll('.btn-info-delete');
-    deleteButtons.forEach((button) => {
-        button.addEventListener('click', function(event) {
-            // Получаем ID пользователя для удаления из атрибута data-user-id кнопки
-            let userId = event.target.dataset.userId;
+    // // Добавляем обработчики событий на кнопки "Edit"
+    // let editButtons = document.querySelectorAll('.btn-info-open');
+    // editButtons.forEach((button, index) => {
+    //     button.addEventListener('click', function() {
+    //         let user = data[index];
+    //         fillEditForm(user);
+    //     });
+    // });
 
-            event.preventDefault();
-            // Выполняем запрос на удаление пользователя
+    // data.forEach(user => {
+    //     let deleteButton = row.querySelector('.btn-danger-submit'); // Найти кнопку "Delete" в текущей строке таблицы
+    //     deleteButton.addEventListener('click', function(event) {
+    //         event.preventDefault();
+    //         let row = event.target.closest('tr');
+    //         let userId = user.id;
+    //         deleteUser(userId);
+    //         // row.remove();
+    //     });
+    // });
 
-            deleteUser(userId);
-            // Предотвращаем стандартное поведение кнопки
-
-        });
-    });
 }
 
 function fillEditForm(user) {
     // Получаем элементы формы для редактирования
-    let idInput = document.getElementById('id1');
-    let firstNameInput = document.getElementById('firstName1');
-    let lastNameInput = document.getElementById('lastName1');
-    let ageInput = document.getElementById('age1');
-    let emailInput = document.getElementById('email1');
-    let passwordInput = document.getElementById('password1');
-    let roleInput = document.getElementById('role1');
+    let idInput = document.getElementById(`id1-${user.id}`);
+    let firstNameInput = document.getElementById(`firstName1-${user.id}`);
+    let lastNameInput = document.getElementById(`lastName1-${user.id}`);
+    let ageInput = document.getElementById(`age1-${user.id}`);
+    let emailInput = document.getElementById(`email1-${user.id}`);
+    let passwordInput = document.getElementById(`password1-${user.id}`);
+    let roleInput = document.getElementById(`role1-${user.id}`);
 
     // Заполняем форму данными пользователя
     idInput.value = user.id;
@@ -376,12 +461,12 @@ function fillEditForm(user) {
     roleInput.value = getUserRole(user); // ошибка
 
     // Отправка данных при нажатии кнопки "Edit"
-    let editForm = document.querySelector('#exampleModal-1 form');
+    let editForm = document.querySelector(`#exampleModal1-${user.id} form`);
     editForm.addEventListener('submit', function(event) {
 
         event.preventDefault(); // Предотвращаем отправку формы по умолчанию
 
-        let modal = document.querySelector('#exampleModal-1');
+        let modal = document.querySelector(`#exampleModal1-${user.id}`);
         let modalInstance = bootstrap.Modal.getInstance(modal); // Получаем экземпляр модального окна
         modalInstance.hide(); // Закрываем модальное окно
 
