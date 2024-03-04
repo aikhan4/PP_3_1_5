@@ -1,14 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
     fetchCurrentUserAndPopulateHeader();
     fetchUsers();
+    addEventListeners();
 });
 
 function fetchUsers() {
     fetch('http://localhost:8080/api/getUsers')
         .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
             return response.json();
         })
         .then(data => {
@@ -49,15 +47,163 @@ function deleteUser(userId) {
         })
 }
 
-function addEventListeners() {
-
+function addUser(url, data) {
+    // Выполнение POST-запроса
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+            // Здесь можно выполнить дополнительные действия после успешной отправки данных
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
 
+
+function addEventListeners() {
+    const navAdmin = document.querySelector('.nav-admin');
+    const navUser = document.querySelector('.nav-user');
+    const usersTableBtn = document.querySelector('.users-table-btnn');
+    const newUserBtn = document.querySelector('.new-user-btn');
+
+    const tableWrapper1 = document.querySelector('.tableWrapper1');
+    const tableWrapper2 = document.querySelector('.tableWrapper2');
+    const tableWrapper3 = document.querySelector('.tableWrapper3');
+
+    let ageErrorMessage = document.querySelector('.ageErrorMessage');
+    let emailErrorMessage = document.querySelector('.emailErrorMessage');
+
+    navAdmin.addEventListener('click', function() {
+        tableWrapper1.style.display = 'block';
+        tableWrapper2.style.display = 'none';
+        tableWrapper3.style.display = 'none';
+
+        navAdmin.style.background = "#1e46ec";
+        navAdmin.style.color = "aliceblue";
+
+        navUser.style.background = "aliceblue";
+        navUser.style.color = "#1e46ec";
+
+    });
+
+    navUser.addEventListener('click', function() {
+        tableWrapper1.style.display = 'none';
+        tableWrapper2.style.display = 'block';
+        tableWrapper3.style.display = 'none';
+
+        fillSoloUserTable();
+
+        navUser.style.background = "#1e46ec";
+        navUser.style.color = "aliceblue";
+
+        navAdmin.style.background = "aliceblue";
+        navAdmin.style.color = "#1e46ec";
+    });
+
+    usersTableBtn.addEventListener('click', function() {
+        tableWrapper1.style.display = 'block';
+        tableWrapper2.style.display = 'none';
+        tableWrapper3.style.display = 'none';
+    });
+
+    newUserBtn.addEventListener('click', function() {
+        tableWrapper1.style.display = 'none';
+        tableWrapper2.style.display = 'none';
+        tableWrapper3.style.display = 'block';
+
+    });
+
+    let addForm = document.querySelector('.tableWrapper3 form');
+    addForm.addEventListener('submit', function(event) {
+
+        event.preventDefault(); // Предотвращаем отправку формы по умолчанию
+
+        // Создаем объект с данными формы
+        let formData = {
+            firstName: document.getElementById('firstName3').value,
+            lastName: document.getElementById('lastName3').value,
+            age: isNaN(parseInt(document.getElementById('age3').value)) ? 0 : parseInt(document.getElementById('age3').value),
+            email: document.getElementById('email3').value,
+            password: document.getElementById('password3').value,
+            role: (document.getElementById('role3').value !== undefined && document.getElementById('role3').value !== '' ? document.getElementById('role3').value : 'USER')
+    };
+
+        // Отправляем данные на сервер с помощью fetch
+        fetch('http://localhost:8080/api/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(response => {
+                // Если запрос успешен, обновляем данные на странице
+                if (response.ok) {
+                    fetchUsers();
+                    tableWrapper1.style.display = 'block';
+                    tableWrapper2.style.display = 'none';
+                    tableWrapper3.style.display = 'none';
+
+                    ageErrorMessage.style.display = 'none';
+                    emailErrorMessage.style.display = 'none';
+                } else {
+                    if (formData.age === NaN || formData.age === undefined || formData.age === '' || formData.age < 0) {
+                        ageErrorMessage.style.display = 'block';
+                    } else {
+                        emailErrorMessage.style.display = 'block';
+                    }
+                    // Если возникла ошибка, выводим сообщение об ошибке
+                    console.error('Ошибка при добавлении пользователя');
+                }
+            })
+            .catch(error => {
+                // Если возникла ошибка, выводим её в консоль
+                console.error('Error:', error);
+            });
+    });
+}
+
+function fillSoloUserTable() {
+    // Выполняем запрос на получение данных о текущем пользователе
+    fetchCurrentUser()
+        .then(user => {
+            // Находим ячейки таблицы, которые нужно заполнить
+            const idCell = document.querySelector('.tableWrapper2 .bodyTr td:nth-child(1) p');
+            const firstNameCell = document.querySelector('.tableWrapper2 .bodyTr td:nth-child(2) p');
+            const lastNameCell = document.querySelector('.tableWrapper2 .bodyTr td:nth-child(3) p');
+            const ageCell = document.querySelector('.tableWrapper2 .bodyTr td:nth-child(4) p');
+            const emailCell = document.querySelector('.tableWrapper2 .bodyTr td:nth-child(5) p');
+            const roleCell = document.querySelector('.tableWrapper2 .bodyTr td:nth-child(6) p');
+
+            // Заполняем ячейки таблицы данными о пользователе
+            idCell.textContent = user.id;
+            firstNameCell.textContent = user.firstName;
+            lastNameCell.textContent = user.lastName;
+            ageCell.textContent = user.age;
+            emailCell.textContent = user.email;
+            roleCell.textContent = user.roles.map(role => role.rolename.substring(5)).join(' ');
+        })
+}
 function fetchCurrentUser() {
-    fetch('http://localhost:8080/api/getCurrentUser')
+    return fetch('http://localhost:8080/api/getCurrentUser')
         .then(response => {
             return response.json();
         })
+        .catch(error => {
+            console.error('Error fetching current user:', error);
+        });
 }
 
 function fetchCurrentUserAndPopulateHeader() {
