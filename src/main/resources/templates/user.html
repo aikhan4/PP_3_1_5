@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -137,16 +137,16 @@
 </head>
 <body class="d-flex flex-column">
 <header>
-    <div class="headerInner d-flex align-items-center justify-content-between">
-        <div class="userInfo d-flex align-items-center">
+    <div class="headerInner d-flex flex-row align-items-center justify-content-between">
+        <div class="userInfo d-flex flex-row align-items-center">
             <div class="item">
-                <p th:text="${user.getEmail()}"></p>
+                <p></p> <!--  th:text="${cookieUser.getEmail()}" -->
             </div>
             <div class="item">
                 <p> with roles: </p>
             </div>
-            <div th:each="role : ${user.getRoles()}" class="item">
-                <p th:text="${role.getRolename().substring(5)}"></p>
+            <div class="item"> <!--  th:each="role : ${cookieUser.getRoles()}" -->
+                <p></p> <!--  th:text="${role.getRolename().substring(5)}" -->
             </div>
         </div>
         <a href="/logout" class="logoutWrapper d-flex align-items-center justify-content-center">
@@ -182,17 +182,13 @@
                             </tr>
                             <tbody>
                             <tr class="bodyTr">
-                                <td><p th:text="${user.getId()}"></p></td>
-                                <td><p th:text="${user.getFirstName()}"></p></td>
-                                <td><p th:text="${user.getLastName()}"></p></td>
-                                <td><p th:text="${user.getAge()}"></p></td>
-                                <td><p th:text="${user.getEmail()}"></p></td>
+                                <td><p></p></td>
+                                <td><p></p></td>
+                                <td><p></p></td>
+                                <td><p></p></td>
+                                <td><p></p></td>
                                 <td>
-                                    <div class="rolesWrapper d-flex align-items-center">
-                                        <div th:each="role : ${user.getRoles()}" class="roleWrapper">
-                                            <p th:text="${role.getRolename().substring(5)}"></p>
-                                        </div>
-                                    </div>
+                                    <p></p>
                                 </td>
                             </tr>
                             </tbody>
@@ -203,7 +199,13 @@
         </div>
     </div>
 </main>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+        crossorigin="anonymous"></script>
+<script src="user.js"></script>
 </body>
 </html>
