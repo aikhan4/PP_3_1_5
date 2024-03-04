@@ -342,8 +342,8 @@ function populateTable(data) {
                                         <div class="items">
                                             <div class="item d-flex flex-column">
                                                 <label class="form-label" for="id2-${user.id}">ID</label>
-                                                <input class="form-control" type="text" name="id-${user.id}"
-                                                       id="id2" readonly/>
+                                                <input class="form-control" type="text" name="id"
+                                                       id="id2-${user.id}" readonly/>
                                             </div>
 
                                             <div class="item d-flex flex-column">
@@ -485,7 +485,7 @@ function fillEditForm(user) {
 
 function fillDeleteForm(user) {
     // Получаем элементы формы для редактирования
-    // let idInput = document.getElementById(`id2-${user.id}`);
+    let idInput = document.getElementById(`id2-${user.id}`);
     let firstNameInput = document.getElementById(`firstName2-${user.id}`);
     let lastNameInput = document.getElementById(`lastName2-${user.id}`);
     let ageInput = document.getElementById(`age2-${user.id}`);
@@ -493,7 +493,7 @@ function fillDeleteForm(user) {
     let passwordInput = document.getElementById(`password2-${user.id}`);
 
     // Заполняем форму данными пользователя
-    // idInput.value = user.id;
+    idInput.value = user.id;
     firstNameInput.value = user.firstName;
     lastNameInput.value = user.lastName;
     ageInput.value = user.age;
