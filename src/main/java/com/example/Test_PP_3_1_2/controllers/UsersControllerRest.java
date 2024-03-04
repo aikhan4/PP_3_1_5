@@ -87,7 +87,7 @@ public class UsersControllerRest {
     @PatchMapping("/change")
     public ResponseEntity<?> changeUser(@RequestBody UserDTO userDTO, BindingResult bindingResult) {
 
-//        userValidator.changeValidate(userDTO, bindingResult);
+        userValidator.changeValidate(userDTO, bindingResult);
 
         if (bindingResult.hasErrors()) {
 

@@ -475,7 +475,30 @@ function fillEditForm(user) {
             body: JSON.stringify(formData)
         })
             .then(response => {
+                if (!response.ok) {
+                    return response.json(); // Можно также вернуть response.text(), если в ответе ожидается текст
+                }
+                const ageError = document.querySelector('.usersListWarningAge');
+                ageError.style.display = "none";
+                const emailError = document.querySelector('.usersListWarningEmail');
+                emailError.style.display = "none";
                 fetchUsers();
+            })
+            .then(data => {
+                if ('age' in data) {
+                    const ageError = document.querySelector('.usersListWarningAge');
+                    ageError.style.display = "block";
+                    setTimeout(() => {
+                        ageError.style.display = "none";
+                    }, 5000);
+                }
+                if ('email' in data) {
+                    const emailError = document.querySelector('.usersListWarningEmail');
+                    emailError.style.display = "block";
+                    setTimeout(() => {
+                        emailError.style.display = "none";
+                    }, 5000);
+                }
             })
             .catch(error => {
                 console.error('Error:', error);
