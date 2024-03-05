@@ -114,9 +114,6 @@ function addEventListeners() {
             tableWrapper1.style.display = 'block';
             tableWrapper2.style.display = 'none';
             tableWrapper3.style.display = 'none';
-            //
-            // btn.style.background = '#b7b5b5';
-            // btn.style.color = '#343333';
 
         });
     });
@@ -126,9 +123,6 @@ function addEventListeners() {
             tableWrapper1.style.display = 'none';
             tableWrapper2.style.display = 'none';
             tableWrapper3.style.display = 'block';
-            //
-            // btn.style.background = '#b7b5b5';
-            // btn.style.color = '#343333';
 
         });
 
@@ -464,7 +458,7 @@ function fillEditForm(user) {
 
         let modal = document.querySelector(`#exampleModal1-${user.id}`);
         let modalInstance = bootstrap.Modal.getInstance(modal); // Получаем экземпляр модального окна
-        modalInstance.hide(); // Закрываем модальное окно
+        modalInstance.hide();
 
         // Создаем объект с данными формы
         let formData = {
@@ -487,7 +481,7 @@ function fillEditForm(user) {
         })
             .then(response => {
                 if (!response.ok) {
-                    return response.json(); // Можно также вернуть response.text(), если в ответе ожидается текст
+                    return response.json();
                 }
                 const ageError = document.querySelector('.usersListWarningAge');
                 ageError.style.display = "none";
